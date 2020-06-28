@@ -1,0 +1,4 @@
+--ESSE ARQUIVO PRECISA TER ESSE NOME PARA QUE O SPRING BOOT AUTOMATICAMENTE
+--POSSA EXECUTAR AS SQL QUE ESTÃO AKI
+
+--insert into cozinha (nom_cozinha) values ('Mineira');
