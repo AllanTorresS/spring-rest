@@ -1,5 +1,8 @@
 package br.com.spring.restreview.controller;
 
+import br.com.spring.restreview.model.Cozinha;
+import br.com.spring.restreview.service.CozinhaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,19 +17,32 @@ import java.util.List;
 @RequestMapping("/api/cozinhas")
 public class CozinhaController {
 
+    @Autowired
+    private CozinhaService cozinhaService;
+
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public List<String> listarTodasCozinhas() {
-        return Arrays.asList("brasileira", "tailandesa");
+    @GetMapping(value = "/todos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public List<Cozinha> listarTodos() {
+        return this.cozinhaService.listarTodos();
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> listarCozinhaPorId(@PathVariable Long id){
+    public ResponseEntity<?> listarPorId(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
 
-      headers.add("LOCATION","http://localhost:8080/novalocalizacao");
+        headers.add("LOCATION", "http://localhost:8080/novalocalizacao");
 
-        return ResponseEntity.status(HttpStatus.FOUND).headers(headers).build();
+        return ResponseEntity.status(HttpStatus.OK).body(this.cozinhaService.procurarPorId(id));
     }
+
+    @PostMapping("/salvar-atualizar")
+    public ResponseEntity<?> salvar(@RequestBody Cozinha cozinha) {
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("LOCATION", "http://localhost:8080/novalocalizacao");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.cozinhaService.salvar(cozinha));
+    }
+
 }

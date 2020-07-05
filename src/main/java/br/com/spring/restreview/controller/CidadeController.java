@@ -1,9 +1,9 @@
 package br.com.spring.restreview.controller;
 
+import br.com.spring.restreview.model.Cidade;
 import br.com.spring.restreview.model.Cozinha;
-import br.com.spring.restreview.model.Estado;
+import br.com.spring.restreview.service.CidadeService;
 import br.com.spring.restreview.service.CozinhaService;
-import br.com.spring.restreview.service.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,20 +11,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/estados")
-public class EstadoController {
+@RequestMapping("/api/cidades")
+public class CidadeController {
 
     @Autowired
-    private EstadoService estadoService;
+    private CidadeService  cidadeService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/todos", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public List<Estado>listarTodos() {
-        return this.estadoService.listarTodos();
+    public List<Cidade>listarTodos() {
+        return this.cidadeService.listarTodos();
     }
 
 
@@ -34,16 +33,18 @@ public class EstadoController {
 
         headers.add("LOCATION", "http://localhost:8080/novalocalizacao");
 
-        return ResponseEntity.status(HttpStatus.OK).body(this.estadoService.procurarPorId(id));
+        return ResponseEntity.status(HttpStatus.OK).body(this.cidadeService.procurarPorId(id));
     }
 
     @PostMapping("/salvar")
-    public ResponseEntity<?> salvar(@RequestBody Estado estado) {
+    public ResponseEntity<?> salvar(@RequestBody Cidade cidade) {
         HttpHeaders headers = new HttpHeaders();
 
         headers.add("LOCATION", "http://localhost:8080/novalocalizacao");
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.estadoService.salvar(estado));
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.cidadeService.salvar(cidade));
     }
+
+
 
 }

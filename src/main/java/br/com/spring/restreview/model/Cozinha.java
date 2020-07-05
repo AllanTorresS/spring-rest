@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "cozinha")
@@ -20,6 +21,8 @@ public class Cozinha {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(name = "nom_cozinha")
     private String nome;
+
+    @OneToMany(mappedBy = "cozinha")
+    private List<Restaurante> restaurantelist;
 }

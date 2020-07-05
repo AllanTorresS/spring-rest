@@ -16,5 +16,5 @@ public class FormaPagamento {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private String descricacao;
+    private String descricao;
 }
